@@ -43,6 +43,8 @@ let markAllReadBtn;
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Doctor Dashboard: Loading...');
+
     // Standard Elements
     userEmailElement = document.getElementById('user-email');
     logoutButton = document.getElementById('logout-button');
@@ -101,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationDropdown.classList.remove('show');
         }
     });
+    
     // Initial Fetch
     fetchNotifications();
     
@@ -279,7 +282,7 @@ async function fetchPatientInsurance(patientId) {
     const container = document.getElementById('patient-insurance-info');
     
     try {
-        // FIX: Must use backticks ` ` for template literal
+        // SAFE: Using backticks for template literal
         const response = await fetch(`/api/doctor/patients/${patientId}/insurance`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -292,7 +295,6 @@ async function fetchPatientInsurance(patientId) {
                 return;
             }
 
-            // Render the policies nicely
             container.innerHTML = policies.map(ins => `
                 <div style="background: rgba(99, 102, 241, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--accent);">
                     <div style="font-weight: 600; color: var(--text-primary); font-size: 15px;">${ins.provider}</div>
@@ -320,7 +322,7 @@ async function fetchPatientSymptoms(patientId) {
     const historyList = document.getElementById('patient-symptoms-list');
     historyList.innerHTML = '<p class="loading">Loading symptoms...</p>';
     try {
-        // FIX: Must use backticks ` ` here too
+        // SAFE: Using backticks for template literal
         const response = await fetch(`/api/doctor/patients/${patientId}/symptoms`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -380,6 +382,9 @@ async function fetchDoctorAppointments() {
         const today = new Date().setHours(0, 0, 0, 0);
 
         appointments.forEach(appt => {
+            // SAFE CHECK: Ensure patient exists
+            if (!appt.patient) return; 
+
             const item = document.createElement('div');
             item.className = 'appointment-item';
             
@@ -432,6 +437,9 @@ async function fetchDoctorMessages() {
         }
 
         messages.forEach(msg => {
+            // SAFE CHECK: Ensure from/to exist
+            if (!msg.from) return;
+
             const item = document.createElement('div');
             const isDoctor = msg.from.role === 'doctor';
             item.className = isDoctor ? 'message-item sent' : 'message-item received';
@@ -710,11 +718,9 @@ async function markAllNotificationsRead() {
 }
 
 async function markOneRead(id) {
-    // Optimistically remove 'unread' class for instant feedback
-    // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        // FIX: Must use backticks ` ` because we are using ${id}
+        // SAFE: Template literal
         await fetch(`/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }

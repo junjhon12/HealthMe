@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirnameResolved, 'public')));
 
 
 app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login', 'login.html'));
+  res.sendFile(path.join(__dirname, 'public','pages', 'login', 'index.html'));
 });
 
 

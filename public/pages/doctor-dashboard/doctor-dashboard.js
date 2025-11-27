@@ -179,7 +179,8 @@ async function populateUserDetails() {
         return;
     }
     try {
-        const response = await fetch('`/api/auth/user', {
+        // FIX: Relative path
+        const response = await fetch('/api/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,7 +207,8 @@ async function populateUserDetails() {
 async function fetchAllPatients() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('`/api/doctor/patients', {
+        // FIX: Relative path
+        const response = await fetch('/api/doctor/patients', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -279,7 +281,8 @@ async function fetchPatientInsurance(patientId) {
     const container = document.getElementById('patient-insurance-info');
     
     try {
-        const response = await fetch(``/api/doctor/patients/${patientId}/insurance`, {
+        // FIX: Relative path
+        const response = await fetch(`/api/doctor/patients/${patientId}/insurance`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -319,7 +322,8 @@ async function fetchPatientSymptoms(patientId) {
     const historyList = document.getElementById('patient-symptoms-list');
     historyList.innerHTML = '<p class="loading">Loading symptoms...</p>';
     try {
-        const response = await fetch(``/api/doctor/patients/${patientId}/symptoms`, {
+        // FIX: Relative path
+        const response = await fetch(`/api/doctor/patients/${patientId}/symptoms`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -363,7 +367,8 @@ async function fetchDoctorAppointments() {
     const token = localStorage.getItem('hm_token');
     appointmentsContainer.innerHTML = '<p class="loading">Loading appointments...</p>';
     try {
-        const response = await fetch('`/api/doctor/appointments', {
+        // FIX: Relative path
+        const response = await fetch('/api/doctor/appointments', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Could not load appointments');
@@ -417,7 +422,8 @@ async function fetchDoctorMessages() {
     const token = localStorage.getItem('hm_token');
     messagesContainer.innerHTML = '<p class="loading">Loading messages...</p>';
     try {
-        const response = await fetch('`/api/doctor/messages', {
+        // FIX: Relative path
+        const response = await fetch('/api/doctor/messages', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Failed to fetch messages');
@@ -475,7 +481,8 @@ async function handleReplySubmit(e) {
     }
 
     try {
-        const response = await fetch('`/api/doctor/messages', {
+        // FIX: Relative path
+        const response = await fetch('/api/doctor/reply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -508,7 +515,8 @@ async function handleAiAnalysisSubmitDoctor(e) {
     aiResultDoctor.className = 'message';
 
     try {
-        const response = await fetch('`/api/ai/analyze', {
+        // FIX: Relative path
+        const response = await fetch('/api/ai/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -540,7 +548,8 @@ async function joinVideoRoom() {
     }
 
     try {
-        const response = await fetch('`/api/video/token', {
+        // FIX: Relative path
+        const response = await fetch('/api/video/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -551,6 +560,11 @@ async function joinVideoRoom() {
         
         const data = await response.json();
         if (!response.ok) throw new Error(data.message);
+
+        const room = await Twilio.Video.connect(data.token, {
+            name: roomName
+        });
+        activeRoom = room;
 
         // 1. Create Local Tracks (Audio + Video) explicitly
         const localTracks = await Twilio.Video.createLocalTracks({
@@ -578,22 +592,24 @@ async function joinVideoRoom() {
             remoteVideoDoctor.appendChild(track.attach());
         };
 
-        room.participants.forEach(p => {
-            p.tracks.forEach(publication => {
-                if (publication.track) handleTrack(publication.track);
+        room.participants.forEach(participant => {
+            participant.on('trackSubscribed', track => {
+                remoteVideoDoctor.innerHTML = ''; // Clear label
+                remoteVideoDoctor.appendChild(track.attach());
             });
-            p.on('trackSubscribed', handleTrack);
         });
 
-        room.on('participantConnected', p => {
-            p.on('trackSubscribed', handleTrack);
+        room.on('participantConnected', participant => {
+            participant.on('trackSubscribed', track => {
+                remoteVideoDoctor.innerHTML = ''; // Clear label
+                remoteVideoDoctor.appendChild(track.attach());
+            });
         });
         
-        room.on('participantDisconnected', p => {
-            p.tracks.forEach(pub => {
-                if (pub.track) {
-                    pub.track.detach().forEach(el => el.remove());
-                }
+        room.on('participantDisconnected', participant => {
+            participant.tracks.forEach(publication => {
+                const attachedElements = publication.track.detach();
+                attachedElements.forEach(element => element.remove());
             });
             remoteVideoDoctor.innerHTML = '<div class="video-label">Patient\'s Video</div>';
         });
@@ -646,7 +662,8 @@ function showMessage(element, text, type) {
 async function fetchNotifications() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('`/api/notifications', {
+        // FIX: Relative path
+        const response = await fetch('/api/notifications', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -690,7 +707,8 @@ function toggleNotifications() {
 async function markAllNotificationsRead() {
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch('`/api/notifications/read-all', {
+        // FIX: Relative path
+        await fetch('/api/notifications/read-all', {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -705,7 +723,8 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch(``/api/notifications/${id}/read`, {
+        // FIX: Relative path
+        await fetch(`/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });

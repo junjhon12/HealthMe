@@ -40,13 +40,18 @@ app.use('/api/admin', adminRoutes);
 const __dirnameResolved = path.resolve();
 
 
-app.use(express.static(path.join(__dirnameResolved, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
 
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public','pages', 'login', 'index.html'));
+app.get('/', (req, res) => {
+    res.redirect('/pages/login/index.html');
 });
-
+app.get('*', (req, res) => {
+    // If request is not for API, send them to login
+    if (!req.path.startsWith('/api')) {
+        res.redirect('/pages/login/index.html');
+    }
+});
 
 mongoose
   .connect(MONGO_URI)

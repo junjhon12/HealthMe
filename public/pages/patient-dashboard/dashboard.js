@@ -197,7 +197,8 @@ async function populateUserDetails() {
     if (!token) return window.location.href = '../login/index.html';
 
     try {
-        const response = await fetch('`/api/auth/user', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/auth/user', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -225,7 +226,8 @@ async function handleStateChange(e) {
     if (!state) return insuranceProviderSelect.innerHTML = '<option value="">Select a state first...</option>';
 
     try {
-        const response = await fetch(``/api/insurance/providers?state=${state}`, {
+        // FIX: Removed invalid quote before backtick
+        const response = await fetch(`/api/insurance/providers?state=${state}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -250,7 +252,8 @@ async function handleInsuranceSubmit(e) {
     const coverageDetails = document.getElementById('coverage').value;
 
     try {
-        const res = await fetch('`/api/insurance', {
+        // FIX: Removed invalid backtick
+        const res = await fetch('/api/insurance', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ policyNumber, provider, coverageDetails })
@@ -270,7 +273,8 @@ async function fetchInsurance() {
     const token = localStorage.getItem('hm_token');
     insuranceList.innerHTML = '<p class="loading">Loading insurance...</p>';
     try {
-        const res = await fetch('`/api/insurance', {
+        // FIX: Removed invalid backtick
+        const res = await fetch('/api/insurance', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -294,7 +298,8 @@ async function fetchSymptomHistory() {
     const token = localStorage.getItem('hm_token');
     symptomHistoryElement.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('`/api/patient/symptoms', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/symptoms', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
@@ -325,7 +330,8 @@ async function fetchSymptomHistory() {
 async function handleDeleteSymptom(symptomId) {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch(``/api/patient/symptoms/${symptomId}`, {
+        // FIX: Removed invalid quote before backtick
+        const response = await fetch(`/api/patient/symptoms/${symptomId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -386,7 +392,8 @@ async function handleSymptomSubmit(e) {
     if (symptoms.length === 0) return showMessage(messageDiv, 'Enter symptoms', 'error');
 
     try {
-        const response = await fetch('`/api/patient/symptoms', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/symptoms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ symptoms })
@@ -404,7 +411,8 @@ async function handleSymptomSubmit(e) {
 async function populateDoctors() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('`/api/patient/doctors', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/doctors', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -434,7 +442,8 @@ async function handleAppointmentSubmit(e) {
     if (!doctorId || !date || !reason) return showMessage(messageDiv, 'Fill all fields', 'error');
 
     try {
-        const response = await fetch('`/api/patient/appointments', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/appointments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ doctorId, date, reason })
@@ -453,7 +462,8 @@ async function fetchPatientAppointments() {
     const token = localStorage.getItem('hm_token');
     appointmentListContainer.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('`/api/patient/appointments', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/appointments', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -512,7 +522,8 @@ async function handleMessageSubmit(e) {
     if (!doctorId || !content.trim()) return showMessage(messageMessage, 'Select doctor & enter message', 'error');
 
     try {
-        const response = await fetch('`/api/patient/messages', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/messages', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ doctorId, content })
@@ -531,7 +542,8 @@ async function fetchPatientMessages() {
     const token = localStorage.getItem('hm_token');
     messageHistoryContainer.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('`/api/patient/messages', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/messages', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -573,7 +585,8 @@ function handleMessageContainerClick(e) {
 async function handleDeleteMessage(id) {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch(``/api/patient/messages/${id}`, {
+        // FIX: Removed invalid quote before backtick
+        const response = await fetch(`/api/patient/messages/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -593,7 +606,8 @@ async function handleAiAnalysisSubmit(e) {
     const symptoms = aiSymptomsInputPatient.value;
     aiResultPatient.textContent = 'Analyzing...';
     try {
-        const response = await fetch('`/api/ai/analyze', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/ai/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ symptoms })
@@ -621,7 +635,8 @@ async function handleChatbotSubmit(e) {
     chatbotInput.disabled = true;
 
     try {
-        const response = await fetch('`/api/ai/chat', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/ai/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ prompt, history: patientChatHistory })
@@ -660,7 +675,8 @@ async function fetchAndDisplayDoctors() {
     doctorListContainer.innerHTML = '<p class="loading">Loading doctors...</p>';
 
     try {
-        const response = await fetch('`/api/patient/doctors', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/patient/doctors', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Failed to fetch doctors');
@@ -709,7 +725,8 @@ async function joinVideoRoom() {
     if (!roomName) return alert('Enter Room Name');
 
     try {
-        const response = await fetch('`/api/video/token', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/video/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ roomName })
@@ -830,7 +847,8 @@ function appendChatMessage(message, role) {
 async function fetchNotifications() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('`/api/notifications', {
+        // FIX: Removed invalid backtick
+        const response = await fetch('/api/notifications', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -874,7 +892,8 @@ function toggleNotifications() {
 async function markAllNotificationsRead() {
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch('`/api/notifications/read-all', {
+        // FIX: Removed invalid backtick
+        await fetch('/api/notifications/read-all', {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -889,7 +908,8 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch(``/api/notifications/${id}/read`, {
+        // FIX: Removed invalid quote before backtick
+        await fetch(`/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });

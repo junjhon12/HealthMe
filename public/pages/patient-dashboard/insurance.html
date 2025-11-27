@@ -1,5 +1,3 @@
-<!-- Add as a new file or integrate into dashboard.html as a section -->
-
 <section id="insurance" class="section">
     <div class="section-header">
         <h2>Insurance Policy</h2>
@@ -42,7 +40,8 @@
         const coverageDetails = document.getElementById('coverage').value;
 
         try {
-            const res = await fetch('`/api/insurance/add', {
+            // FIX: Removed erroneous backtick
+            const res = await fetch('/api/insurance/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ policyNumber, provider, coverageDetails })
@@ -62,7 +61,8 @@
     async function fetchInsurance() {
         const token = localStorage.getItem('hm_token');
         try {
-            const res = await fetch('`/api/insurance', {
+            // FIX: Removed erroneous backtick
+            const res = await fetch('/api/insurance', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {

@@ -279,6 +279,7 @@ async function fetchPatientInsurance(patientId) {
     const container = document.getElementById('patient-insurance-info');
     
     try {
+        // FIX: Used backticks ` ` for template literal
         const response = await fetch(`/api/doctor/patients/${patientId}/insurance`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -319,6 +320,7 @@ async function fetchPatientSymptoms(patientId) {
     const historyList = document.getElementById('patient-symptoms-list');
     historyList.innerHTML = '<p class="loading">Loading symptoms...</p>';
     try {
+        // FIX: Used backticks ` ` for template literal
         const response = await fetch(`/api/doctor/patients/${patientId}/symptoms`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -712,6 +714,7 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
+        // FIX: Used backticks ` ` for template literal
         await fetch(`/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }

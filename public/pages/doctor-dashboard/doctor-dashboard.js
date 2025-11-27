@@ -279,7 +279,7 @@ async function fetchPatientInsurance(patientId) {
     const container = document.getElementById('patient-insurance-info');
     
     try {
-        // FIX: Used backticks ` ` for template literal
+        // FIX: Must use backticks ` ` because we are using ${patientId}
         const response = await fetch(`/api/doctor/patients/${patientId}/insurance`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -320,7 +320,7 @@ async function fetchPatientSymptoms(patientId) {
     const historyList = document.getElementById('patient-symptoms-list');
     historyList.innerHTML = '<p class="loading">Loading symptoms...</p>';
     try {
-        // FIX: Used backticks ` ` for template literal
+        // FIX: Must use backticks ` ` here too
         const response = await fetch(`/api/doctor/patients/${patientId}/symptoms`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -585,24 +585,22 @@ async function joinVideoRoom() {
             remoteVideoDoctor.appendChild(track.attach());
         };
 
-        room.participants.forEach(participant => {
-            participant.on('trackSubscribed', track => {
-                remoteVideoDoctor.innerHTML = ''; // Clear label
-                remoteVideoDoctor.appendChild(track.attach());
+        room.participants.forEach(p => {
+            p.tracks.forEach(publication => {
+                if (publication.track) handleTrack(publication.track);
             });
+            p.on('trackSubscribed', handleTrack);
         });
 
-        room.on('participantConnected', participant => {
-            participant.on('trackSubscribed', track => {
-                remoteVideoDoctor.innerHTML = ''; // Clear label
-                remoteVideoDoctor.appendChild(track.attach());
-            });
+        room.on('participantConnected', p => {
+            p.on('trackSubscribed', handleTrack);
         });
         
-        room.on('participantDisconnected', participant => {
-            participant.tracks.forEach(publication => {
-                const attachedElements = publication.track.detach();
-                attachedElements.forEach(element => element.remove());
+        room.on('participantDisconnected', p => {
+            p.tracks.forEach(pub => {
+                if (pub.track) {
+                    pub.track.detach().forEach(el => el.remove());
+                }
             });
             remoteVideoDoctor.innerHTML = '<div class="video-label">Patient\'s Video</div>';
         });
@@ -714,7 +712,7 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        // FIX: Used backticks ` ` for template literal
+        // FIX: Must use backticks ` ` because we are using ${id}
         await fetch(`/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }

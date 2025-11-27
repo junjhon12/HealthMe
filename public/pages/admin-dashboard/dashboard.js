@@ -67,7 +67,7 @@ function setupNavigation() {
 async function fetchSystemStats() {
     const token = localStorage.getItem('hm_token');
     try {
-        const res = await fetch('http://localhost:3000/api/admin/stats', {
+        const res = await fetch('/api/admin/stats', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -85,7 +85,7 @@ async function fetchUsers() {
     userTableBody.innerHTML = '<tr><td colspan="4" class="loading">Loading users...</td></tr>';
     
     try {
-        const res = await fetch('http://localhost:3000/api/admin/users', {
+        const res = await fetch('/api/admin/users', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -123,7 +123,7 @@ async function deleteUser(userId) {
 
     const token = localStorage.getItem('hm_token');
     try {
-        const res = await fetch(`http://localhost:3000/api/admin/users/${userId}`, {
+        const res = await fetch(`/api/admin/users/${userId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -143,7 +143,7 @@ async function populateAdminDetails() {
     if (!token) return window.location.href = '../login/index.html';
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/user', {
+        const response = await fetch('`/api/auth/user', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {

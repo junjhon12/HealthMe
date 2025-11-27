@@ -179,7 +179,7 @@ async function populateUserDetails() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/auth/user', {
+        const response = await fetch('`/api/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,7 +206,7 @@ async function populateUserDetails() {
 async function fetchAllPatients() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('http://localhost:3000/api/doctor/patients', {
+        const response = await fetch('`/api/doctor/patients', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -279,7 +279,7 @@ async function fetchPatientInsurance(patientId) {
     const container = document.getElementById('patient-insurance-info');
     
     try {
-        const response = await fetch(`http://localhost:3000/api/doctor/patients/${patientId}/insurance`, {
+        const response = await fetch(``/api/doctor/patients/${patientId}/insurance`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -319,7 +319,7 @@ async function fetchPatientSymptoms(patientId) {
     const historyList = document.getElementById('patient-symptoms-list');
     historyList.innerHTML = '<p class="loading">Loading symptoms...</p>';
     try {
-        const response = await fetch(`http://localhost:3000/api/doctor/patients/${patientId}/symptoms`, {
+        const response = await fetch(``/api/doctor/patients/${patientId}/symptoms`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -363,7 +363,7 @@ async function fetchDoctorAppointments() {
     const token = localStorage.getItem('hm_token');
     appointmentsContainer.innerHTML = '<p class="loading">Loading appointments...</p>';
     try {
-        const response = await fetch('http://localhost:3000/api/doctor/appointments', {
+        const response = await fetch('`/api/doctor/appointments', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Could not load appointments');
@@ -417,7 +417,7 @@ async function fetchDoctorMessages() {
     const token = localStorage.getItem('hm_token');
     messagesContainer.innerHTML = '<p class="loading">Loading messages...</p>';
     try {
-        const response = await fetch('http://localhost:3000/api/doctor/messages', {
+        const response = await fetch('`/api/doctor/messages', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Failed to fetch messages');
@@ -475,7 +475,7 @@ async function handleReplySubmit(e) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/doctor/messages', {
+        const response = await fetch('`/api/doctor/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -508,7 +508,7 @@ async function handleAiAnalysisSubmitDoctor(e) {
     aiResultDoctor.className = 'message';
 
     try {
-        const response = await fetch('http://localhost:3000/api/ai/analyze', {
+        const response = await fetch('`/api/ai/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -540,7 +540,7 @@ async function joinVideoRoom() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/video/token', {
+        const response = await fetch('`/api/video/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -646,7 +646,7 @@ function showMessage(element, text, type) {
 async function fetchNotifications() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('http://localhost:3000/api/notifications', {
+        const response = await fetch('`/api/notifications', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -690,7 +690,7 @@ function toggleNotifications() {
 async function markAllNotificationsRead() {
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch('http://localhost:3000/api/notifications/read-all', {
+        await fetch('`/api/notifications/read-all', {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -705,7 +705,7 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch(`http://localhost:3000/api/notifications/${id}/read`, {
+        await fetch(``/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });

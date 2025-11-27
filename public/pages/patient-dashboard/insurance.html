@@ -42,7 +42,7 @@
         const coverageDetails = document.getElementById('coverage').value;
 
         try {
-            const res = await fetch('http://localhost:3000/api/insurance/add', {
+            const res = await fetch('`/api/insurance/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ policyNumber, provider, coverageDetails })
@@ -62,7 +62,7 @@
     async function fetchInsurance() {
         const token = localStorage.getItem('hm_token');
         try {
-            const res = await fetch('http://localhost:3000/api/insurance', {
+            const res = await fetch('`/api/insurance', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {

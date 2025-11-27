@@ -85,7 +85,7 @@ async function populateUserDetails() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/user', {
+        const response = await fetch('`/api/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ async function populateUserDetails() {
 async function fetchSymptomHistory() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('http://localhost:3000/api/patient/symptoms', {
+        const response = await fetch('`/api/patient/symptoms', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -159,7 +159,7 @@ async function populateDoctors() {
     const token = localStorage.getItem('hm_token');
     
     try {
-        const response = await fetch('http://localhost:3000/api/patient/doctors', {
+        const response = await fetch('`/api/patient/doctors', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -216,7 +216,7 @@ async function handleSymptomSubmit(e) {
     const symptoms = symptomsInput.split(',').map(s => s.trim()).filter(s => s);
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/symptoms', {
+        const response = await fetch('`/api/patient/symptoms', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -275,7 +275,7 @@ async function handleAppointmentSubmit(e) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/appointments', {
+        const response = await fetch('`/api/patient/appointments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -313,7 +313,7 @@ async function handleMessageSubmit(e) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/messages', {
+        const response = await fetch('`/api/patient/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -197,7 +197,7 @@ async function populateUserDetails() {
     if (!token) return window.location.href = '../login/index.html';
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/user', {
+        const response = await fetch('`/api/auth/user', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -225,7 +225,7 @@ async function handleStateChange(e) {
     if (!state) return insuranceProviderSelect.innerHTML = '<option value="">Select a state first...</option>';
 
     try {
-        const response = await fetch(`http://localhost:3000/api/insurance/providers?state=${state}`, {
+        const response = await fetch(``/api/insurance/providers?state=${state}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -250,7 +250,7 @@ async function handleInsuranceSubmit(e) {
     const coverageDetails = document.getElementById('coverage').value;
 
     try {
-        const res = await fetch('http://localhost:3000/api/insurance', {
+        const res = await fetch('`/api/insurance', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ policyNumber, provider, coverageDetails })
@@ -270,7 +270,7 @@ async function fetchInsurance() {
     const token = localStorage.getItem('hm_token');
     insuranceList.innerHTML = '<p class="loading">Loading insurance...</p>';
     try {
-        const res = await fetch('http://localhost:3000/api/insurance', {
+        const res = await fetch('`/api/insurance', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -294,7 +294,7 @@ async function fetchSymptomHistory() {
     const token = localStorage.getItem('hm_token');
     symptomHistoryElement.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('http://localhost:3000/api/patient/symptoms', {
+        const response = await fetch('`/api/patient/symptoms', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
@@ -325,7 +325,7 @@ async function fetchSymptomHistory() {
 async function handleDeleteSymptom(symptomId) {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch(`http://localhost:3000/api/patient/symptoms/${symptomId}`, {
+        const response = await fetch(``/api/patient/symptoms/${symptomId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -386,7 +386,7 @@ async function handleSymptomSubmit(e) {
     if (symptoms.length === 0) return showMessage(messageDiv, 'Enter symptoms', 'error');
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/symptoms', {
+        const response = await fetch('`/api/patient/symptoms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ symptoms })
@@ -404,7 +404,7 @@ async function handleSymptomSubmit(e) {
 async function populateDoctors() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('http://localhost:3000/api/patient/doctors', {
+        const response = await fetch('`/api/patient/doctors', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -434,7 +434,7 @@ async function handleAppointmentSubmit(e) {
     if (!doctorId || !date || !reason) return showMessage(messageDiv, 'Fill all fields', 'error');
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/appointments', {
+        const response = await fetch('`/api/patient/appointments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ doctorId, date, reason })
@@ -453,7 +453,7 @@ async function fetchPatientAppointments() {
     const token = localStorage.getItem('hm_token');
     appointmentListContainer.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('http://localhost:3000/api/patient/appointments', {
+        const response = await fetch('`/api/patient/appointments', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -512,7 +512,7 @@ async function handleMessageSubmit(e) {
     if (!doctorId || !content.trim()) return showMessage(messageMessage, 'Select doctor & enter message', 'error');
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/messages', {
+        const response = await fetch('`/api/patient/messages', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ doctorId, content })
@@ -531,7 +531,7 @@ async function fetchPatientMessages() {
     const token = localStorage.getItem('hm_token');
     messageHistoryContainer.innerHTML = '<p class="loading">Loading...</p>';
     try {
-        const response = await fetch('http://localhost:3000/api/patient/messages', {
+        const response = await fetch('`/api/patient/messages', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -573,7 +573,7 @@ function handleMessageContainerClick(e) {
 async function handleDeleteMessage(id) {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch(`http://localhost:3000/api/patient/messages/${id}`, {
+        const response = await fetch(``/api/patient/messages/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -593,7 +593,7 @@ async function handleAiAnalysisSubmit(e) {
     const symptoms = aiSymptomsInputPatient.value;
     aiResultPatient.textContent = 'Analyzing...';
     try {
-        const response = await fetch('http://localhost:3000/api/ai/analyze', {
+        const response = await fetch('`/api/ai/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ symptoms })
@@ -621,7 +621,7 @@ async function handleChatbotSubmit(e) {
     chatbotInput.disabled = true;
 
     try {
-        const response = await fetch('http://localhost:3000/api/ai/chat', {
+        const response = await fetch('`/api/ai/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ prompt, history: patientChatHistory })
@@ -660,7 +660,7 @@ async function fetchAndDisplayDoctors() {
     doctorListContainer.innerHTML = '<p class="loading">Loading doctors...</p>';
 
     try {
-        const response = await fetch('http://localhost:3000/api/patient/doctors', {
+        const response = await fetch('`/api/patient/doctors', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Failed to fetch doctors');
@@ -709,7 +709,7 @@ async function joinVideoRoom() {
     if (!roomName) return alert('Enter Room Name');
 
     try {
-        const response = await fetch('http://localhost:3000/api/video/token', {
+        const response = await fetch('`/api/video/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ roomName })
@@ -830,7 +830,7 @@ function appendChatMessage(message, role) {
 async function fetchNotifications() {
     const token = localStorage.getItem('hm_token');
     try {
-        const response = await fetch('http://localhost:3000/api/notifications', {
+        const response = await fetch('`/api/notifications', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -874,7 +874,7 @@ function toggleNotifications() {
 async function markAllNotificationsRead() {
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch('http://localhost:3000/api/notifications/read-all', {
+        await fetch('`/api/notifications/read-all', {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -889,7 +889,7 @@ async function markOneRead(id) {
     // In a real app, you might navigate the user to the relevant section (e.g., Messages)
     const token = localStorage.getItem('hm_token');
     try {
-        await fetch(`http://localhost:3000/api/notifications/${id}/read`, {
+        await fetch(``/api/notifications/${id}/read`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
         });
